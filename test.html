@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=>, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <title>The Wall</title>
+</head>
+<body>
+        <div class="container-fluid">
+                <div class="jumbotron jumbotron-fluid" style="background-color: green;">
+                      <h1 class="display-4" style="display: inline-block; margin-left: 80px;">Coding Dojo Wall</h1>
+                    <p>Welcome, {{ session['first_name'] }}</p> 
+                    <a href="/logout">Logout</a>
+                    <div class="row" style="margin-left: 100px;">
+                    <div class="col">
+                    <h2>message_total Message(s) for You</h2>
+                      {% for messages in messages %}
+                    <p>{{ messages['first_name'] }} said (time ago)<a href="/delete/{{ messages['messages.id'] }}">Delete comment img</a></p>
+                      <p>{{ messages['content'] }}</p>
+                      {% endfor %}
+                    </div>
+                    <div class="col">
+                      <h2>Send Messages</h2>
+                      <p>You have sent num_messages so far</p>
+                      {% for send_message in send_message %}
+                        {% if send_message['id'] != session['userid'] %}
+                    <form action="/messages" method="POST">
+                      <div class="form-group">
+                      {{ send_message['first_name'] }}<input class="form-control" type="textarea" name="message" style="width: 350px;">
+                      <input type="hidden" name="recipient_id" value="{{ send_message['id'] }}" style="display: inline-block;">
+                      <input type="submit" class="btn btn-secondary" value="Send" style="margin-top: 15px; display: inline-block;">
+                      </div>
+                    </form>
+                      {% endif %}
+                    {% endfor %}
+                </div>
+</body>
+</html>
